@@ -24,6 +24,7 @@ Then the SIO/2 would clock out the byte on TxDA. The SIO Technical Manual says t
 What I did notice was that the data came out LSB first and that the data started appearing on the falling edge of the second clock pulse.
 
 ![](./images/tx_sequence.png)
+(Click the image for a larger one).
 
 # SPI Receive
 
@@ -46,5 +47,9 @@ I have a great little retro system based around several boards designed by Steve
 
 In order to investigate further the possibility of using an SIO/2, I have an [SC104](https://smallcomputercentral.com/sc104-z80-sio-2-module-rc2014/) SIO/2 Module that I've modified to support my experiments.
 
+The clocks and signals are all handled by an ATTINY84A. I had hoped to use one of the little 8-pin ATTINY85 chips but I needed a bit more I/O than it could provide. Note that the 84A is just generating clocks and discrete signals for the SIO/2 and doesn't do any of the serial-parallel and parallel-serial conversions. That is all being done by the SIO/2.
 
+This is my modified version of Steve's SC104 schematic:
+![](./images/sc104-schematic-SPI-changes-ATTINY84A.png)
+(Click the image for a larger one).
  
