@@ -1,4 +1,4 @@
-# SC104-SIO2-does-SPI
+# Can a Zilog SIO/2 serial chip handle SPI communication?
  
 I've been scoping out the goundwork for a possible RetroDuino-Z80 board along the lines of my RetroDuino-8085 and got intrigued by the possibility of using a Z80 SIO/2 chip as an SPI device.
  
@@ -22,6 +22,8 @@ I discovered that if I were to:
 Then the SIO/2 would clock out the byte on TxDA. The SIO Technical Manual says that TxD changes on the falling edge of TxC - just like SPI Mode 0.
 
 What I did notice was that the data came out LSB first and that the data started appearing on the falling edge of the second clock pulse.
+
+![](./images/tx_sequence.png)
 
 # SPI Receive
 
