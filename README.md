@@ -45,11 +45,45 @@ I have a great little retro system based around several boards designed by Steve
 - SC145 CompactFlash Module
 - [SC112](https://smallcomputercentral.com/sc112-modular-backplane-rc2014/) 6 Slot Modular Backplane
 
-In order to investigate further the possibility of using an SIO/2, I have an [SC104](https://smallcomputercentral.com/sc104-z80-sio-2-module-rc2014/) SIO/2 Module that I've modified to support my experiments.
+In order to investigate further the possibility of using an SIO/2, I bought an [SC104](https://smallcomputercentral.com/sc104-z80-sio-2-module-rc2014/) SIO/2 PCB from Steve's [Tindie store](https://www.tindie.com/stores/tindiescx/) that I've modified to support my experiments.
 
-The clocks and signals are all handled by an ATTINY84A. I had hoped to use one of the little 8-pin ATTINY85 chips but I needed a bit more I/O than it could provide. Note that the 84A is just generating clocks and discrete signals for the SIO/2 and doesn't do any of the serial-parallel and parallel-serial conversions. That is all being done by the SIO/2.
+The clocks and signals are all handled by an TINY84A. I had hoped to use one of the little 8-pin TINY85 chips but I needed a bit more I/O than it could provide without disabling the RESET pin. Note that the TINY84A is just generating clocks and discrete signals for the SIO/2 and doesn't do any of the serial-parallel and parallel-serial conversions. That is all being done by the SIO/2.
 
 This is my modified version of Steve's SC104 schematic:
 ![](./images/sc104-schematic-SPI-changes-ATTINY84A.png)
 (Click the image for a larger one).
- 
+
+These are the sequence of signals and events that happen as the SPI data is exchanged:
+
+ 1. The SIO/2 is configured for synchronous operation with an external sync
+ 2. SPI slave device CS (or SS) pin goes low (an output pin on my SC129 module)
+ 3. The first byte of the message to transmit is loaded into the SIO/2 Tx register
+ 4. The SIO/2 receiver and transmitter are enabled
+ 5. The SIO/2 DTR_A is set low to tell the TINY84A to start the pre-transmission sequence
+ 6. The TINY84A generates 2 clock pulses to the SIO/2 (TxCA & RxCA) - no clock pulses to the SPI device
+ 7. The TINY84A then sets SIO/2 CTS_A low to signal that pre-transmission has completed
+ 8. The SIO/2 RTS_A is pulsed low to tell the TINY84A to generate 8 clock pulses for the SIO and the SPI device
+ 9. The TINY84A generates the 8 pulses, setting SIO/2 SYNC_A low shortly after the first rising edge of the 1st of the 8 clock pulses
+10. The SIO/2 hardware clocks out the Tx byte and reads in the Rx byte
+11. A check is made to see if the SIO/2 has a byte to read (byte is read and stored if available)
+12. Wait for the SIO/2 to signal it's ready for another Tx byte
+
+The sequence then repeats steps 8 -> 12  until all the bytes have been transmitted. Below is an annotated screenshot from my LA showing the above steps:
+![](./images/start-mh.png)
+(Click the image for a larger one).
+
+Once the last byte has been transmitted, there is a "tidy up" sequence:
+
+13. The SIO/2 transmitter is disabled
+14. The SIO/2 DTR_A is set high to signal the end of the transmission.
+15. The TINY84A generates any remaining blocks of 8 clock pulses
+16. The TINY84A generates 16 additional clock pulses to the SIO/2 (TxCA & RxCA) - no more clock pulses to the SPI device
+17. Keep checking to see if the SIO/2 has a byte to read (byte is read and stored if available) until the TINY84A sets SIO/2 CTS_A & SYNC_A high
+18. SPI slave device CS (or SS) pin goes high (an output pin on my SC129 module) 
+
+Below is an annotated screenshot from my LA showing the above steps:
+![](./images/end-mh.png)
+(Click the image for a larger one).
+
+And finally the output from my test code:
+![](./images/terminal.png)
