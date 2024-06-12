@@ -69,6 +69,7 @@ These are the sequence of signals and events that happen as the SPI data is exch
 12. Wait for the SIO/2 to signal it's ready for another Tx byte
 
 The sequence then repeats steps 8 -> 12  until all the bytes have been transmitted. Below is an annotated screenshot from my LA showing the above steps:
+
 ![](./images/start-mh.png)
 (Click the image for a larger one).
 
@@ -77,13 +78,22 @@ Once the last byte has been transmitted, there is a "tidy up" sequence:
 13. The SIO/2 transmitter is disabled
 14. The SIO/2 DTR_A is set high to signal the end of the transmission.
 15. The TINY84A generates any remaining blocks of 8 clock pulses
-16. The TINY84A generates 16 additional clock pulses to the SIO/2 (TxCA & RxCA) - no more clock pulses to the SPI device
+16. The TINY84A detects DTR_A going high and generates 16 additional clock pulses to the SIO/2 (TxCA & RxCA) - no more clock pulses to the SPI device
 17. Keep checking to see if the SIO/2 has a byte to read (byte is read and stored if available) until the TINY84A sets SIO/2 CTS_A & SYNC_A high
-18. SPI slave device CS (or SS) pin goes high (an output pin on my SC129 module) 
+18. SPI slave device CS (or SS) pin goes high (an output pin on my SC129 module)
+19. The SIO/2 receiver is disabled
+
+The tidy up sequence mainly generates additional clocks for the SIO/2 to make it give up the remaining received bytes that are in the Rx FIFO.
 
 Below is an annotated screenshot from my LA showing the above steps:
+
 ![](./images/end-mh.png)
 (Click the image for a larger one).
 
-And finally the output from my test code:
+And finally the output from my test code that is reading from a Microchip 25LC256 SPI EEPROM:
+
 ![](./images/terminal.png)
+
+#To Do
+Discover a reliable maximum clock speed for the SIO & SPI clock signal.
+Test the setup against a MicroSD card and read/write from/to the FAT filesystem.
