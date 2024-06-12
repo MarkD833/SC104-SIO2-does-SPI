@@ -2,7 +2,7 @@
  
 I've been scoping out the goundwork for a possible RetroDuino-Z80 board along the lines of my RetroDuino-8085 and got intrigued by the possibility of using a Z80 SIO/2 chip as an SPI device.
  
-My first thought was - no way, why would an SIO/2 know how to handle SPI messages! But then I started reading through the Zilog SIO Technical Manual and a cunning plan began to form.
+My first thought was - no way, why would an SIO/2 know how to handle SPI messages! But then I started reading through the Zilog SIO Technical Manual and to quote [Edmund Blackadder](https://en.wikipedia.org/wiki/Edmund_Blackadder), I had a cunning plan.
 
 Long story short, yes you can convince a Zilog SIO/2 to handle SPI messages. It just needs a little bit of assistance.
 
