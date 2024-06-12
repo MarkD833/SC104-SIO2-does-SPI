@@ -94,6 +94,6 @@ And finally the output from my test code that is reading from a Microchip 25LC25
 
 ![](./images/terminal.png)
 
-#To Do
+# Still to do
 Discover a reliable maximum clock speed for the SIO & SPI clock signal.
 Test the setup against a MicroSD card and read/write from/to the FAT filesystem.
