@@ -94,6 +94,15 @@ And finally the output from my test code that is reading from a Microchip 25LC25
 
 ![](./images/terminal.png)
 
+# Speed limitation
+
+During testing I discovered that there was a limitation on how fast I could clock the data out of the SIO/2. This was nothing to do with the maximum clock frequency that could be applied to the TxC & RxC pins.
+
+The issue was to do with how I think the SIO/2 operates. As I increased the clock speed, the SIO/2 would output the SYNC byte as the second byte in any message. I think this is likely because the first byte is quickly snatched out of the tx register and the serialisation process started. The SIO/2 then seems to load up the sync byte (from WR6) and put that in the Tx queue. It seems that once the Tx queue stats to fill up, the SIO/2 happily sends out the rest of the bytes correctly without any other sync bytes appearing.
+
+The limit seems to be with a TxC (and RxC) of about 16us (8us high & 8us low). Reducing the high and low periods to less than 8us results in the sync byte being output.
+
+I'm still getting back into programming a Z80 so it is entirely possible that there is a more efficient way of transferring the data to and from the SIO/2 that will allow the clock to be increased slightly. As it stands, the SPI bit clock is about 76kHz.
+
 # Still to do
-- Discover a reliable maximum clock speed for the SIO & SPI clock signal.
 - Test the setup against a MicroSD card and read/write from/to the FAT filesystem.
