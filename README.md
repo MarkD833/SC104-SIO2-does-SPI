@@ -103,7 +103,7 @@ The code folder has several pieces of software that I've been using:
 | Code | Notes |
 | :---- | :---- |
 | SC104_UNO.ino | This is my prototyping code that used an Arduino UNO to develop the code that went into the TINY84A. |
-| ATTINY84A_SIO_SPI | This is a Microchip Studio project with the prototype code for the TINY84A. The TINY84A runs off its internal 8MHz clock source. Note the SPI/SIO clock is intentionally whilst developing the code. |
+| ATTINY84A_SIO_SPI | This is a Microchip Studio project with the prototype code for the TINY84A. The TINY84A runs off its internal 8MHz clock source. Note the SPI/SIO clock is intentionally slower whilst developing the code. |
 | SPI_test.asm | The test code that runs on my Z80 RC2014 system. See notes above on the actual boards that I have. |
 
 # Speed limitation
@@ -117,4 +117,7 @@ The limit seems to be with a TxC (and RxC) of about 16us (8us high & 8us low). R
 I'm still getting back into programming a Z80 so it is entirely possible that there is a more efficient way of transferring the data to and from the SIO/2 that will allow the clock to be increased slightly. As it stands, the SPI bit clock is about 76kHz.
 
 # Still to do
-- Test the setup against a MicroSD card and read/write from/to the FAT filesystem.
+- Test the setup against a MicroSD card using the [FatFs library](http://elm-chan.org/fsw/ff/).
+
+# Plan Backplane
+Explore the use of an MC6852 as an alternative synchronous serial chip.
