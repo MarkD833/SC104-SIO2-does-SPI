@@ -119,5 +119,5 @@ I'm still getting back into programming a Z80 so it is entirely possible that th
 # Still to do
 - Test the setup against a MicroSD card using the [FatFs library](http://elm-chan.org/fsw/ff/).
 
-# Plan Backplane
+# Plan B!
 Explore the use of an MC6852 as an alternative synchronous serial chip.
