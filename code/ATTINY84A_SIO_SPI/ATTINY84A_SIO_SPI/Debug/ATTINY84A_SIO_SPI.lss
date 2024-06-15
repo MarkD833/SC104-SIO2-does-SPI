@@ -1,0 +1,330 @@
+
+ATTINY84A_SIO_SPI.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000015c  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000001d0  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000004  00800060  00800060  000001d0  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000001d0  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000200  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000038  00000000  00000000  0000023c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000007a9  00000000  00000000  00000274  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000503  00000000  00000000  00000a1d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000003c1  00000000  00000000  00000f20  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000054  00000000  00000000  000012e4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000373  00000000  00000000  00001338  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000026e  00000000  00000000  000016ab  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000028  00000000  00000000  00001919  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
+   2:	2a c0       	rjmp	.+84     	; 0x58 <__bad_interrupt>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
+  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+
+00000022 <__ctors_end>:
+  22:	11 24       	eor	r1, r1
+  24:	1f be       	out	0x3f, r1	; 63
+  26:	cf e5       	ldi	r28, 0x5F	; 95
+  28:	d2 e0       	ldi	r29, 0x02	; 2
+  2a:	de bf       	out	0x3e, r29	; 62
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	ec e5       	ldi	r30, 0x5C	; 92
+  36:	f1 e0       	ldi	r31, 0x01	; 1
+  38:	02 c0       	rjmp	.+4      	; 0x3e <__SP_H__>
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+  3e:	a0 36       	cpi	r26, 0x60	; 96
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <__do_copy_data+0xc>
+
+00000044 <__do_clear_bss>:
+  44:	20 e0       	ldi	r18, 0x00	; 0
+  46:	a0 e6       	ldi	r26, 0x60	; 96
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	a4 36       	cpi	r26, 0x64	; 100
+  50:	b2 07       	cpc	r27, r18
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	46 d0       	rcall	.+140    	; 0xe2 <main>
+  56:	80 c0       	rjmp	.+256    	; 0x158 <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <preTransmission>:
+// Assumes the SIO_CLK pin is LOW on entry.
+// Assumes the SIO_CTS pin is HIGH on entry.
+// ========================================================================
+void preTransmission( void ) {
+
+	PINA = (1<<SIO_CLK);	// toggle HIGH
+  5a:	82 e0       	ldi	r24, 0x02	; 2
+  5c:	89 bb       	out	0x19, r24	; 25
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  5e:	95 e8       	ldi	r25, 0x85	; 133
+  60:	9a 95       	dec	r25
+  62:	f1 f7       	brne	.-4      	; 0x60 <preTransmission+0x6>
+  64:	00 00       	nop
+	_delay_us( spiClockPulseWidth );
+	PINA = (1<<SIO_CLK);	// toggle LOW
+  66:	89 bb       	out	0x19, r24	; 25
+  68:	95 e8       	ldi	r25, 0x85	; 133
+  6a:	9a 95       	dec	r25
+  6c:	f1 f7       	brne	.-4      	; 0x6a <preTransmission+0x10>
+  6e:	00 00       	nop
+	_delay_us( spiClockPulseWidth );
+	PINA = (1<<SIO_CLK);	// toggle HIGH
+  70:	89 bb       	out	0x19, r24	; 25
+  72:	95 e8       	ldi	r25, 0x85	; 133
+  74:	9a 95       	dec	r25
+  76:	f1 f7       	brne	.-4      	; 0x74 <preTransmission+0x1a>
+  78:	00 00       	nop
+	_delay_us( spiClockPulseWidth );
+	PINA = (1<<SIO_CLK);	// toggle LOW
+  7a:	89 bb       	out	0x19, r24	; 25
+  7c:	85 e8       	ldi	r24, 0x85	; 133
+  7e:	8a 95       	dec	r24
+  80:	f1 f7       	brne	.-4      	; 0x7e <preTransmission+0x24>
+  82:	00 00       	nop
+	_delay_us( spiClockPulseWidth );
+
+	PINA = (1<<SIO_CTS);	// toggle LOW
+  84:	80 e2       	ldi	r24, 0x20	; 32
+  86:	89 bb       	out	0x19, r24	; 25
+  88:	08 95       	ret
+
+0000008a <postTransmission>:
+// Called when SPI Message Transfer signal (DTR) goes HIGH
+// Generates additional clock pulses for the SIO to cause the SIO
+// Rx hardware to release the final bytes.
+// ========================================================================
+void postTransmission( void ) {
+	for (uint8_t i=0; i<16; i++) {
+  8a:	80 e0       	ldi	r24, 0x00	; 0
+  8c:	0c c0       	rjmp	.+24     	; 0xa6 <postTransmission+0x1c>
+		PINA = (1<<SIO_CLK);	// toggle HIGH
+  8e:	92 e0       	ldi	r25, 0x02	; 2
+  90:	99 bb       	out	0x19, r25	; 25
+  92:	25 e8       	ldi	r18, 0x85	; 133
+  94:	2a 95       	dec	r18
+  96:	f1 f7       	brne	.-4      	; 0x94 <postTransmission+0xa>
+  98:	00 00       	nop
+		_delay_us( spiClockPulseWidth );
+		PINA = (1<<SIO_CLK);	// toggle LOW
+  9a:	99 bb       	out	0x19, r25	; 25
+  9c:	95 e8       	ldi	r25, 0x85	; 133
+  9e:	9a 95       	dec	r25
+  a0:	f1 f7       	brne	.-4      	; 0x9e <postTransmission+0x14>
+  a2:	00 00       	nop
+// Called when SPI Message Transfer signal (DTR) goes HIGH
+// Generates additional clock pulses for the SIO to cause the SIO
+// Rx hardware to release the final bytes.
+// ========================================================================
+void postTransmission( void ) {
+	for (uint8_t i=0; i<16; i++) {
+  a4:	8f 5f       	subi	r24, 0xFF	; 255
+  a6:	80 31       	cpi	r24, 0x10	; 16
+  a8:	90 f3       	brcs	.-28     	; 0x8e <postTransmission+0x4>
+		PINA = (1<<SIO_CLK);	// toggle LOW
+		_delay_us( spiClockPulseWidth );
+	}
+
+	// toggle SIO_SYNC HIGH & SIO_CTS HIGH
+	PINA = (1<<SIO_SYNC) | (1<<SIO_CTS);
+  aa:	84 e2       	ldi	r24, 0x24	; 36
+  ac:	89 bb       	out	0x19, r24	; 25
+
+	// reset the tx count back to zero
+	prevTxCounter = 0;
+  ae:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  b2:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+	TCNT0  = 0;     // reset the pulse counter
+  b6:	12 be       	out	0x32, r1	; 50
+  b8:	08 95       	ret
+
+000000ba <sio8Clocks>:
+// Assumes the SIO_CLK & SPI_CLK pins are LOW on entry.
+// ========================================================================
+void sio8Clocks() {
+
+	// set SIO_SYNC LOW
+	PORTA = PORTA & ~(1<<SIO_SYNC );
+  ba:	8b b3       	in	r24, 0x1b	; 27
+  bc:	8b 7f       	andi	r24, 0xFB	; 251
+  be:	8b bb       	out	0x1b, r24	; 27
+	
+	for ( uint8_t p=0; p<8; p++) {
+  c0:	80 e0       	ldi	r24, 0x00	; 0
+  c2:	0c c0       	rjmp	.+24     	; 0xdc <sio8Clocks+0x22>
+		// toggle SIO_SYNC HIGH & SIO_CTS HIGH
+		PINA = (1<<SIO_CLK) | (1<<SPI_CLK);
+  c4:	93 e0       	ldi	r25, 0x03	; 3
+  c6:	99 bb       	out	0x19, r25	; 25
+  c8:	25 e8       	ldi	r18, 0x85	; 133
+  ca:	2a 95       	dec	r18
+  cc:	f1 f7       	brne	.-4      	; 0xca <sio8Clocks+0x10>
+  ce:	00 00       	nop
+		_delay_us( spiClockPulseWidth );
+
+		// toggle SIO_SYNC HIGH & SIO_CTS LOW
+		PINA = (1<<SIO_CLK) | (1<<SPI_CLK);
+  d0:	99 bb       	out	0x19, r25	; 25
+  d2:	95 e8       	ldi	r25, 0x85	; 133
+  d4:	9a 95       	dec	r25
+  d6:	f1 f7       	brne	.-4      	; 0xd4 <sio8Clocks+0x1a>
+  d8:	00 00       	nop
+void sio8Clocks() {
+
+	// set SIO_SYNC LOW
+	PORTA = PORTA & ~(1<<SIO_SYNC );
+	
+	for ( uint8_t p=0; p<8; p++) {
+  da:	8f 5f       	subi	r24, 0xFF	; 255
+  dc:	88 30       	cpi	r24, 0x08	; 8
+  de:	90 f3       	brcs	.-28     	; 0xc4 <sio8Clocks+0xa>
+
+		// toggle SIO_SYNC HIGH & SIO_CTS LOW
+		PINA = (1<<SIO_CLK) | (1<<SPI_CLK);
+		_delay_us( spiClockPulseWidth );
+	}
+}
+  e0:	08 95       	ret
+
+000000e2 <main>:
+uint16_t prevTxCounter = 0;
+
+int main(void)
+{
+	// SIO_CLK & SPI_CLK & SIO_SYNC & SIO_CTS are outputs
+	DDRA = 0x27;
+  e2:	87 e2       	ldi	r24, 0x27	; 39
+  e4:	8a bb       	out	0x1a, r24	; 26
+
+	// SIO_SYNC & SIO_CTS start out HIGH
+	PORTA = 0x24;
+  e6:	84 e2       	ldi	r24, 0x24	; 36
+  e8:	8b bb       	out	0x1b, r24	; 27
+
+	// configure Timer/Counter #0 as an up-counter counting falling edge of pulses on the T0 pin
+	TIMSK0 = 0;		// no interrupts from Timer/Counter #0
+  ea:	19 be       	out	0x39, r1	; 57
+	TCCR0A = 0;     // normal operation
+  ec:	10 be       	out	0x30, r1	; 48
+	TCCR0B = 0x06;  // clock on falling edge of pulse on T0 pin
+  ee:	86 e0       	ldi	r24, 0x06	; 6
+  f0:	83 bf       	out	0x33, r24	; 51
+	TCNT0  = 0;     // reset the pulse counter
+  f2:	12 be       	out	0x32, r1	; 50
+
+	prevXferRequest = PINA & (1<<SIO_DTR);
+  f4:	89 b3       	in	r24, 0x19	; 25
+  f6:	80 78       	andi	r24, 0x80	; 128
+  f8:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <prevXferRequest>
+	currXferRequest = prevXferRequest;
+  fc:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <currXferRequest>
+    	
+    // FOREVER loop
+    while (1) 
+    {
+		// read the state of the xfer request control signal from the SIO
+		currXferRequest = PINA & (1<<SIO_DTR);
+ 100:	89 b3       	in	r24, 0x19	; 25
+ 102:	80 78       	andi	r24, 0x80	; 128
+ 104:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <currXferRequest>
+		
+		// have we detected the beginning or end of a transmission?
+		if (( prevXferRequest == SIO_DTR_HIGH ) && ( currXferRequest == SIO_DTR_LOW )) {
+ 108:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <prevXferRequest>
+ 10c:	90 38       	cpi	r25, 0x80	; 128
+ 10e:	31 f4       	brne	.+12     	; 0x11c <main+0x3a>
+ 110:	81 11       	cpse	r24, r1
+ 112:	04 c0       	rjmp	.+8      	; 0x11c <main+0x3a>
+			// transfer request signal has just gone LOW - i.e. start of a message
+			prevXferRequest = currXferRequest;
+ 114:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <prevXferRequest>
+			preTransmission();
+ 118:	a0 df       	rcall	.-192    	; 0x5a <preTransmission>
+ 11a:	f2 cf       	rjmp	.-28     	; 0x100 <main+0x1e>
+		}				
+		else if ( TCNT0 !=  prevTxCounter ) {
+ 11c:	22 b7       	in	r18, 0x32	; 50
+ 11e:	30 e0       	ldi	r19, 0x00	; 0
+ 120:	40 91 60 00 	lds	r20, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 124:	50 91 61 00 	lds	r21, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 128:	24 17       	cp	r18, r20
+ 12a:	35 07       	cpc	r19, r21
+ 12c:	59 f0       	breq	.+22     	; 0x144 <main+0x62>
+			// generate 8 clock pulses for the SIO & SPI device
+			sio8Clocks();
+ 12e:	c5 df       	rcall	.-118    	; 0xba <sio8Clocks>
+			prevTxCounter++;
+ 130:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 134:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 138:	01 96       	adiw	r24, 0x01	; 1
+ 13a:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 13e:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 142:	de cf       	rjmp	.-68     	; 0x100 <main+0x1e>
+		}
+		else if (( prevXferRequest == SIO_DTR_LOW ) && ( currXferRequest == SIO_DTR_HIGH )) {
+ 144:	91 11       	cpse	r25, r1
+ 146:	dc cf       	rjmp	.-72     	; 0x100 <main+0x1e>
+ 148:	80 38       	cpi	r24, 0x80	; 128
+ 14a:	d1 f6       	brne	.-76     	; 0x100 <main+0x1e>
+			// transfer request signal has just gone HIGH - i.e. end of a message
+			postTransmission();
+ 14c:	9e df       	rcall	.-196    	; 0x8a <postTransmission>
+			prevXferRequest = currXferRequest;
+ 14e:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <currXferRequest>
+ 152:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <prevXferRequest>
+ 156:	d4 cf       	rjmp	.-88     	; 0x100 <main+0x1e>
+
+00000158 <_exit>:
+ 158:	f8 94       	cli
+
+0000015a <__stop_program>:
+ 15a:	ff cf       	rjmp	.-2      	; 0x15a <__stop_program>

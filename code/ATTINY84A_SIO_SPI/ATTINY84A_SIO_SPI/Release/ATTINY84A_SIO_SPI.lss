@@ -1,0 +1,208 @@
+
+ATTINY84A_SIO_SPI.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000158  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000001cc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000004  00800060  00800060  000001cc  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000001cc  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001fc  2**2
+                  CONTENTS, READONLY
+  5 .debug_info   00000420  00000000  00000000  00000238  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000003e8  00000000  00000000  00000658  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   000000fd  00000000  00000000  00000a40  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    00000173  00000000  00000000  00000b3d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
+   2:	2a c0       	rjmp	.+84     	; 0x58 <__bad_interrupt>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
+  1c:	1d c0       	rjmp	.+58     	; 0x58 <__bad_interrupt>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+
+00000022 <__ctors_end>:
+  22:	11 24       	eor	r1, r1
+  24:	1f be       	out	0x3f, r1	; 63
+  26:	cf e5       	ldi	r28, 0x5F	; 95
+  28:	d2 e0       	ldi	r29, 0x02	; 2
+  2a:	de bf       	out	0x3e, r29	; 62
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	e8 e5       	ldi	r30, 0x58	; 88
+  36:	f1 e0       	ldi	r31, 0x01	; 1
+  38:	02 c0       	rjmp	.+4      	; 0x3e <__SP_H__>
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+  3e:	a0 36       	cpi	r26, 0x60	; 96
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <__do_copy_data+0xc>
+
+00000044 <__do_clear_bss>:
+  44:	20 e0       	ldi	r18, 0x00	; 0
+  46:	a0 e6       	ldi	r26, 0x60	; 96
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	a4 36       	cpi	r26, 0x64	; 100
+  50:	b2 07       	cpc	r27, r18
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	45 d0       	rcall	.+138    	; 0xe0 <main>
+  56:	7e c0       	rjmp	.+252    	; 0x154 <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <preTransmission>:
+  5a:	80 e2       	ldi	r24, 0x20	; 32
+  5c:	89 bb       	out	0x19, r24	; 25
+  5e:	95 e8       	ldi	r25, 0x85	; 133
+  60:	9a 95       	dec	r25
+  62:	f1 f7       	brne	.-4      	; 0x60 <preTransmission+0x6>
+  64:	00 00       	nop
+  66:	89 bb       	out	0x19, r24	; 25
+  68:	95 e8       	ldi	r25, 0x85	; 133
+  6a:	9a 95       	dec	r25
+  6c:	f1 f7       	brne	.-4      	; 0x6a <preTransmission+0x10>
+  6e:	00 00       	nop
+  70:	89 bb       	out	0x19, r24	; 25
+  72:	95 e8       	ldi	r25, 0x85	; 133
+  74:	9a 95       	dec	r25
+  76:	f1 f7       	brne	.-4      	; 0x74 <preTransmission+0x1a>
+  78:	00 00       	nop
+  7a:	89 bb       	out	0x19, r24	; 25
+  7c:	85 e8       	ldi	r24, 0x85	; 133
+  7e:	8a 95       	dec	r24
+  80:	f1 f7       	brne	.-4      	; 0x7e <preTransmission+0x24>
+  82:	00 00       	nop
+  84:	82 e0       	ldi	r24, 0x02	; 2
+  86:	89 bb       	out	0x19, r24	; 25
+  88:	08 95       	ret
+
+0000008a <postTransmission>:
+  8a:	80 e1       	ldi	r24, 0x10	; 16
+  8c:	90 e2       	ldi	r25, 0x20	; 32
+  8e:	99 bb       	out	0x19, r25	; 25
+  90:	25 e8       	ldi	r18, 0x85	; 133
+  92:	2a 95       	dec	r18
+  94:	f1 f7       	brne	.-4      	; 0x92 <postTransmission+0x8>
+  96:	00 00       	nop
+  98:	99 bb       	out	0x19, r25	; 25
+  9a:	25 e8       	ldi	r18, 0x85	; 133
+  9c:	2a 95       	dec	r18
+  9e:	f1 f7       	brne	.-4      	; 0x9c <postTransmission+0x12>
+  a0:	00 00       	nop
+  a2:	81 50       	subi	r24, 0x01	; 1
+  a4:	a1 f7       	brne	.-24     	; 0x8e <postTransmission+0x4>
+  a6:	8b b3       	in	r24, 0x1b	; 27
+  a8:	86 60       	ori	r24, 0x06	; 6
+  aa:	8b bb       	out	0x1b, r24	; 27
+  ac:	10 92 61 00 	sts	0x0061, r1	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+  b0:	10 92 60 00 	sts	0x0060, r1	; 0x800060 <__DATA_REGION_ORIGIN__>
+  b4:	12 be       	out	0x32, r1	; 50
+  b6:	08 95       	ret
+
+000000b8 <sio8Clocks>:
+  b8:	88 e0       	ldi	r24, 0x08	; 8
+  ba:	91 e2       	ldi	r25, 0x21	; 33
+  bc:	99 bb       	out	0x19, r25	; 25
+  be:	22 e4       	ldi	r18, 0x42	; 66
+  c0:	2a 95       	dec	r18
+  c2:	f1 f7       	brne	.-4      	; 0xc0 <sio8Clocks+0x8>
+  c4:	00 c0       	rjmp	.+0      	; 0xc6 <sio8Clocks+0xe>
+  c6:	da 98       	cbi	0x1b, 2	; 27
+  c8:	22 e4       	ldi	r18, 0x42	; 66
+  ca:	2a 95       	dec	r18
+  cc:	f1 f7       	brne	.-4      	; 0xca <sio8Clocks+0x12>
+  ce:	00 c0       	rjmp	.+0      	; 0xd0 <sio8Clocks+0x18>
+  d0:	99 bb       	out	0x19, r25	; 25
+  d2:	25 e8       	ldi	r18, 0x85	; 133
+  d4:	2a 95       	dec	r18
+  d6:	f1 f7       	brne	.-4      	; 0xd4 <sio8Clocks+0x1c>
+  d8:	00 00       	nop
+  da:	81 50       	subi	r24, 0x01	; 1
+  dc:	79 f7       	brne	.-34     	; 0xbc <sio8Clocks+0x4>
+  de:	08 95       	ret
+
+000000e0 <main>:
+  e0:	87 e2       	ldi	r24, 0x27	; 39
+  e2:	8a bb       	out	0x1a, r24	; 26
+  e4:	86 e0       	ldi	r24, 0x06	; 6
+  e6:	8b bb       	out	0x1b, r24	; 27
+  e8:	19 be       	out	0x39, r1	; 57
+  ea:	10 be       	out	0x30, r1	; 48
+  ec:	83 bf       	out	0x33, r24	; 51
+  ee:	12 be       	out	0x32, r1	; 50
+  f0:	89 b3       	in	r24, 0x19	; 25
+  f2:	80 78       	andi	r24, 0x80	; 128
+  f4:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <prevDTRState>
+  f8:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <currDTRState>
+  fc:	89 b3       	in	r24, 0x19	; 25
+  fe:	80 78       	andi	r24, 0x80	; 128
+ 100:	80 93 62 00 	sts	0x0062, r24	; 0x800062 <currDTRState>
+ 104:	90 91 63 00 	lds	r25, 0x0063	; 0x800063 <prevDTRState>
+ 108:	90 38       	cpi	r25, 0x80	; 128
+ 10a:	31 f4       	brne	.+12     	; 0x118 <main+0x38>
+ 10c:	81 11       	cpse	r24, r1
+ 10e:	04 c0       	rjmp	.+8      	; 0x118 <main+0x38>
+ 110:	10 92 63 00 	sts	0x0063, r1	; 0x800063 <prevDTRState>
+ 114:	a2 df       	rcall	.-188    	; 0x5a <preTransmission>
+ 116:	f2 cf       	rjmp	.-28     	; 0xfc <main+0x1c>
+ 118:	22 b7       	in	r18, 0x32	; 50
+ 11a:	30 e0       	ldi	r19, 0x00	; 0
+ 11c:	40 91 60 00 	lds	r20, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 120:	50 91 61 00 	lds	r21, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 124:	24 17       	cp	r18, r20
+ 126:	35 07       	cpc	r19, r21
+ 128:	59 f0       	breq	.+22     	; 0x140 <main+0x60>
+ 12a:	c6 df       	rcall	.-116    	; 0xb8 <sio8Clocks>
+ 12c:	80 91 60 00 	lds	r24, 0x0060	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 130:	90 91 61 00 	lds	r25, 0x0061	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 134:	01 96       	adiw	r24, 0x01	; 1
+ 136:	90 93 61 00 	sts	0x0061, r25	; 0x800061 <__DATA_REGION_ORIGIN__+0x1>
+ 13a:	80 93 60 00 	sts	0x0060, r24	; 0x800060 <__DATA_REGION_ORIGIN__>
+ 13e:	de cf       	rjmp	.-68     	; 0xfc <main+0x1c>
+ 140:	91 11       	cpse	r25, r1
+ 142:	dc cf       	rjmp	.-72     	; 0xfc <main+0x1c>
+ 144:	80 38       	cpi	r24, 0x80	; 128
+ 146:	d1 f6       	brne	.-76     	; 0xfc <main+0x1c>
+ 148:	a0 df       	rcall	.-192    	; 0x8a <postTransmission>
+ 14a:	80 91 62 00 	lds	r24, 0x0062	; 0x800062 <currDTRState>
+ 14e:	80 93 63 00 	sts	0x0063, r24	; 0x800063 <prevDTRState>
+ 152:	d4 cf       	rjmp	.-88     	; 0xfc <main+0x1c>
+
+00000154 <_exit>:
+ 154:	f8 94       	cli
+
+00000156 <__stop_program>:
+ 156:	ff cf       	rjmp	.-2      	; 0x156 <__stop_program>

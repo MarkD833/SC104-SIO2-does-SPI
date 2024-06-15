@@ -8,6 +8,8 @@ Long story short, yes you can convince a Zilog SIO/2 to handle SPI messages. It 
 
 The key is to configure the SIO/2 for synchronous mode with an external sync. Note that I'm using an SIO/2 device and only channel A can do this. The limitation is due to the various bonding options for the SIO/0, SIO/1 and SIO/2 chips and what signals are not present. With the SIO/2, there is no SYNC_B pin.
 
+My test SPI device is a Microchip 25LC256 SPI EEPROM that I've programmed with a known block of data.
+
 Below is what I've achieved so far:
 
 # SPI Transmit
@@ -93,6 +95,16 @@ Below is an annotated screenshot from my LA showing the above steps:
 And finally the output from my test code that is reading from a Microchip 25LC256 SPI EEPROM:
 
 ![](./images/terminal.png)
+
+# The Software
+
+The code folder has several pieces of software that I've been using:
+
+| Code | Notes |
+| :---- | :---- |
+| SC104_UNO.ino | This is my prototyping code that used an Arduino UNO to develop the code that went into the TINY84A. |
+| ATTINY84A_SIO_SPI | This is a Microchip Studio project with the prototype code for the TINY84A. The TINY84A runs off its internal 8MHz clock source. Note the SPI/SIO clock is intentionally whilst developing the code. |
+| SPI_test.asm | The test code that runs on my Z80 RC2014 system. See notes above on the actual boards that I have. |
 
 # Speed limitation
 
