@@ -1,5 +1,5 @@
 # Can a Zilog SIO/2 serial chip handle SPI communication?
- 
+
 I've been scoping out the goundwork for a possible RetroDuino-Z80 board along the lines of my RetroDuino-8085 and got intrigued by the possibility of using a Z80 SIO/2 chip as an SPI device.
  
 My first thought was - no way, why would an SIO/2 know how to handle SPI messages! But then I started reading through the Zilog SIO Technical Manual and to quote [Edmund Blackadder](https://en.wikipedia.org/wiki/Edmund_Blackadder), I had a cunning plan.
@@ -116,8 +116,18 @@ The limit seems to be with a TxC (and RxC) of about 16us (8us high & 8us low). R
 
 I'm still getting back into programming a Z80 so it is entirely possible that there is a more efficient way of transferring the data to and from the SIO/2 that will allow the clock to be increased slightly. As it stands, the SPI bit clock is about 76kHz.
 
-# Still to do
-I'd like to test the setup against a MicroSD card using the [FatFs library](http://elm-chan.org/fsw/ff/). However, there's an issue with the way the SIO/2 works that may introduce a complication to many. The FatFs library assumes proper SPI hardware that can exchange 1 byte at a time and this ability is used within the FatFS low-level routines in diskio.c to poll for status information etc. The way the SIO/2 works - i.e. its 3 byte receive FIFO - kinda throws a spanner in the works. It may be possible to work around this by having a 1 byte tx/rx exchange with the overhead of the additional clocks needed to force the byte through the Rx FIFO but this may prove such an overhead that, unfortunately,  it's probably not worth persuing this project further.
+# Still to do & possible gotcha!
+I'd like to test the setup against a MicroSD card using the [FatFs library](http://elm-chan.org/fsw/ff/).
+
+However, there's an issue with the way the SIO/2 works that may introduce a complication to many. The FatFs library assumes proper SPI hardware that can exchange 1 byte at a time and this ability is used within the FatFS low-level routines in diskio.c to poll for status information etc.
+
+The way the SIO/2 works (if I've discovered correctly) with its 3 byte receive FIFO - kinda throws a spanner in the works. It may be possible to work around this by having a 1 byte tx/rx exchange with the overhead of the additional clocks needed to force the byte through the Rx FIFO but this may prove such an overhead that, unfortunately,  it's probably not worth persuing this project further.
+
+But if you don't need to poll your SPI device or are not concerned about the additional time overhead of flushing the receive FIFO, then this information may be of use to you.
 
 # Plan B!
-Explore the use of an MC6852 as an alternative synchronous serial chip. But that may have a similar overhead issue - have to wait and see.
+Explore the use of an MC6852 as an alternative synchronous serial chip. But that may have a similar overhead issue, but I'm kinda hopefull as the datasheet section on receiving data says:
+
+"Once synchronisation has been achieved, subsequent characters are automatically transferred into the Receive Data FIFO and clocked through the FIFO to the last empty location..."
+
+I've ordered an [SC705](https://smallcomputercentral.com/sc705-rcbus-serial-acia/) bare board from Steve Cousins Tindie store to play with and have a couple of MC68B52s coming from Bulgaria. I will provide a write-up on my experiences shortly.
